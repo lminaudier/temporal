@@ -27,6 +27,7 @@ require (
 	github.com/olivere/elastic/v7 v7.0.32
 	github.com/pborman/uuid v1.2.1
 	github.com/prometheus/client_golang v1.13.0
+	github.com/rantav/go-grpc-channelz v0.0.3
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/stretchr/testify v1.8.1
 	github.com/temporalio/ringpop-go v0.0.0-20220818230611-30bf23b490b2
@@ -63,7 +64,10 @@ require (
 	modernc.org/sqlite v1.19.1
 )
 
-require cloud.google.com/go/compute/metadata v0.2.1 // indirect
+require (
+	cloud.google.com/go/compute/metadata v0.2.1 // indirect
+	github.com/go-chi/chi/v5 v5.0.7 // indirect
+)
 
 require (
 	cloud.google.com/go v0.105.0 // indirect

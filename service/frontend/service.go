@@ -25,13 +25,17 @@
 package frontend
 
 import (
+	"fmt"
 	"math/rand"
 	"net"
+	"net/http"
 	"os"
 	"sync/atomic"
 	"time"
 
+	channelz "github.com/rantav/go-grpc-channelz"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/channelz/service"
 	"google.golang.org/grpc/health"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/reflection"
@@ -298,6 +302,8 @@ func (s *Service) Start() {
 	adminservice.RegisterAdminServiceServer(s.server, s.adminHandler)
 	operatorservice.RegisterOperatorServiceServer(s.server, s.operatorHandler)
 
+	service.RegisterChannelzServiceToServer(s.server)
+
 	reflection.Register(s.server)
 
 	// must start resource first
@@ -308,6 +314,14 @@ func (s *Service) Start() {
 	s.adminHandler.Start()
 	s.operatorHandler.Start()
 	s.handler.Start()
+
+	http.Handle("/", channelz.CreateHandler("/debug", s.grpcListener.Addr().String()))
+	adminListener, err := net.Listen("tcp", "0.0.0.0:8081")
+	if err != nil {
+		logger.Fatal("Failed to start debug HTTP API on frontend listener", tag.Error(err))
+	}
+	logger.Info(fmt.Sprintf("starting grpc debug UI on :8081 connecting to %q", s.grpcListener.Addr().String()))
+	go http.Serve(adminListener, nil)
 
 	listener := s.grpcListener
 	logger.Info("Starting to serve on frontend listener")

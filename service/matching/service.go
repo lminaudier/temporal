@@ -31,6 +31,7 @@ import (
 	"time"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/channelz/service"
 	"google.golang.org/grpc/health"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 
@@ -101,6 +102,7 @@ func (s *Service) Start() {
 	s.handler.Start()
 
 	matchingservice.RegisterMatchingServiceServer(s.server, s.handler)
+	service.RegisterChannelzServiceToServer(s.server)
 	healthpb.RegisterHealthServer(s.server, s.healthServer)
 	s.healthServer.SetServingStatus(serviceName, healthpb.HealthCheckResponse_SERVING)
 
