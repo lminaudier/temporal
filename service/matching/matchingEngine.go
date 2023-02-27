@@ -910,6 +910,7 @@ func (e *matchingEngineImpl) createPollWorkflowTaskQueueResponse(
 		taskToken := &tokenspb.Task{
 			NamespaceId:      task.event.Data.GetNamespaceId(),
 			WorkflowId:       task.event.Data.GetWorkflowId(),
+			WorkflowType:     historyResponse.GetWorkflowType().GetName(),
 			RunId:            task.event.Data.GetRunId(),
 			ScheduledEventId: historyResponse.GetScheduledEventId(),
 			Attempt:          historyResponse.GetAttempt(),

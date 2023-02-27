@@ -964,6 +964,7 @@ func (wh *WorkflowHandler) RespondWorkflowTaskCompleted(
 			NamespaceId:      taskToken.GetNamespaceId(),
 			WorkflowId:       taskToken.GetWorkflowId(),
 			RunId:            taskToken.GetRunId(),
+			WorkflowType:     taskToken.GetWorkflowType(),
 			ScheduledEventId: histResp.StartedResponse.GetScheduledEventId(),
 			Attempt:          histResp.StartedResponse.GetAttempt(),
 		}
