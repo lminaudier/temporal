@@ -63,7 +63,10 @@ require (
 	modernc.org/sqlite v1.20.0
 )
 
-require cloud.google.com/go/compute/metadata v0.2.2 // indirect
+require (
+	cloud.google.com/go/compute/metadata v0.2.2 // indirect
+	github.com/apple/foundationdb/bindings/go v0.0.0-20230314195910-a60d512ebbdc // indirect
+)
 
 require (
 	cloud.google.com/go v0.107.0 // indirect
